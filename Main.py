@@ -13,8 +13,8 @@ SYSTEM_NM = platform.system()
 
 if SYSTEM_NM == 'Linux':
     # REAL
-    # REF_DIR = "../reference/hg38/"
-    REF_DIR = "../reference/GRCh37_release_101/"
+    REF_DIR = "../reference/hg38/"
+    # REF_DIR = "../reference/GRCh37_release_101/"  # 20201125
 else:
     # DEV
     REF_DIR = "D:/000_WORK/000_reference_path/human/hg38/Splited/"
@@ -27,8 +27,8 @@ LEN_PAM = 3
 LEN_RTT_f_PAM = 3
 LEN_f_PAM = 20
 
-# MIS_MTCH_WIN = [0, 8]
-MIS_MTCH_WIN = [0, 7]  # 20201125
+MIS_MTCH_WIN = [0, 8]
+# MIS_MTCH_WIN = [0, 7]  # 20201125
 CONT_WIN = [4, 3]  # 20201125
 
 TOTAL_CPU = mp.cpu_count()
@@ -51,9 +51,10 @@ def main(st_time):
     jobs = []
     for chr_nm in chr_arr:
         # proc = mp.Process(target=count_mismatch, args=(trgt_full_list, chr_nm, st_time))
-        # proc = mp.Process(target=count_mismatch_by_guide_PAM_RTTonly, args=(result_list, trgt_full_list, chr_nm, st_time))
-        proc = mp.Process(target=count_mismatch_cont_seq_by_guide_PAM_RTTonly_,
-                          args=(result_list, trgt_full_list, chr_nm, st_time))  # 20201125
+        proc = mp.Process(target=count_mismatch_by_guide_PAM_RTTonly,
+                          args=(result_list, trgt_full_list, chr_nm, st_time))
+        # proc = mp.Process(target=count_mismatch_cont_seq_by_guide_PAM_RTTonly_,
+        #                   args=(result_list, trgt_full_list, chr_nm, st_time))  # 20201125
         jobs.append(proc)
         proc.start()
 
@@ -69,11 +70,11 @@ def main(st_time):
     header = ['Type', 'Chr', 'Location', 'Off-target sequence', 'mismatch_tot_cnt', 'mis_mtch_guide_cnt(1~20)',
               'mis_mtch_PAM_cnt(21~23)', 'mis_mtch_RTTonly_cnt(24~)', 'strand']
     try:
-        # util.make_excel('./output/tot_result', header, srted_result_list)
-        util.make_excel('./output/context_result', header, srted_result_list)  # 20201125
+        util.make_excel('./output/tot_result', header, srted_result_list)
+        # util.make_excel('./output/context_result', header, srted_result_list)  # 20201125
     except Exception as err:
-        # util.make_tsv('./output/tot_result', header, srted_result_list)
-        util.make_tsv('./output/context_result', header, srted_result_list)  # 20201125
+        util.make_tsv('./output/tot_result', header, srted_result_list)
+        # util.make_tsv('./output/context_result', header, srted_result_list)  # 20201125
 
     print("::::::::::: %.2f seconds ::::::::::::::" % (time.perf_counter() - st_time))
 
@@ -129,8 +130,8 @@ def count_mismatch_by_guide_PAM_RTTonly(result_list, trgt_full_list, chr_nm, st_
     print(chr_nm, "count_mismatch_by_guide_PAM_RTTonly DONE ::: %.2f seconds :::" % (time.perf_counter() - st_time))
 
 
-def count_mismatch_cont_seq_by_guide_PAM_RTTonly_(result_list, trgt_full_list, chr_nm, st_time):
-    print(chr_nm, 'count_mismatch_cont_seq_by_guide_PAM_RTTonly_ ::::::::::::::::::')
+def count_mismatch_cont_seq_by_guide_PAM_RTTonly(result_list, trgt_full_list, chr_nm, st_time):
+    print(chr_nm, 'count_mismatch_cont_seq_by_guide_PAM_RTTonly ::::::::::::::::::')
     util = Util.Utils()
     logic = Logic.Logics()
 
@@ -184,7 +185,7 @@ def count_mismatch_cont_seq_by_guide_PAM_RTTonly_(result_list, trgt_full_list, c
                         [trgt_type, chr_nm, len_fa_seq - i - LEN_f_PAM, m_cont_seq, mis_mtch_cnt, mis_mtch_guide_cnt,
                          mis_mtch_PAM_cnt, mis_mtch_RTTonly_cnt, '-'])
 
-    print(chr_nm, "count_mismatch_cont_seq_by_guide_PAM_RTTonly_ DONE ::: %.2f seconds :::" % (time.perf_counter() - st_time))
+    print(chr_nm, "count_mismatch_cont_seq_by_guide_PAM_RTTonly DONE ::: %.2f seconds :::" % (time.perf_counter() - st_time))
 
 
 def count_mismatch(trgt_full_list, chr_nm, st_time):
