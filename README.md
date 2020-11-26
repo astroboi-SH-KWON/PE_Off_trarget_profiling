@@ -40,3 +40,7 @@ Mismatch range: 0 <=, <= 7                                                      
                                                                                                 ==> loc = 3 bp in front of PAM (nick-site pos)
 나머지는 동일하게 하려 합니다.
 
+chr17 doesn't have 'NNNNNNNNN----NNNNNNNNN'
+
+
+
