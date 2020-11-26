@@ -28,3 +28,15 @@ HEK3-01_guide mismatch	1	1453414	GGCCCAGACTGAGCACGTGATGGCAGAGGA
 나와야 할 정보 예시					
 Type	Chr	Location	Off-target sequence	mismatch_tot_cnt	mismatch_cnt_in_guide	mismatch_cnt_in_PAM	mismatch_cnt_in_RTTonly	strand
 
+
+
+
+::: 20201125 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+조건을 일부 바꾸려고 하는데요
+Reference genome sequence data: hg19 (GRCh37, https://grch37.ensembl.org/info/data/index.html)  ==> GRCh37 로 분석
+Mismatch range: 0 <=, <= 7                                                                      ==> MIS_MTCH_WIN = [0, 7]  # 20201125
+결과 값에서 Off-target sequence 뽑아내는 것에서, 앞에 4bp 추가, 뒤로 3bp 추가                            ==> 4 bp[추가] + 기존 20 bp spacer + PAM + 나머지 RTT + 3 bp[추가]
+                                                                                                ==> loc = 3 bp in front of PAM (nick-site pos)
+나머지는 동일하게 하려 합니다.
+
